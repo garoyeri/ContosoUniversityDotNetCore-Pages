@@ -1,0 +1,24 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: PowerShell@2
+  displayName: Setup Required Dependencies
+  inputs:
+    filePath: 'setup.ps1'
+
+- task: PowerShell@2
+  displayName: Generate Version using GitVersion
+  inputs:
+    targetType: 'inline'
+    script: dotnet gitversion /output buildserver
+
+- task: PowerShell@2
+  displayName: Build and Test
+  inputs:
+    targetType: 'inline'
+    script: 'invoke-psake ci -properties ${''version'':''$(Build.BuildNumber)''}'
+  
