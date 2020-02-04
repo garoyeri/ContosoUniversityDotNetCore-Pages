@@ -31,13 +31,13 @@ task Test -depends Compile -description "Run unit tests" {
 }
  
 task Compile -depends Info -description "Compile the solution" {
-    exec { set-project-properties $version } -workingDirectory .
+    exec { set-project-properties $script:version } -workingDirectory .
     exec { dotnet build --configuration $configuration /nologo } -workingDirectory .
 }
 
 task Publish -depends Compile -description "Publish the primary projects for distribution" {
     remove-directory-silently $publish
-    exec { publish-project } -workingDirectory src/ContosoUniversity
+    exec { publish-project } -workingDirectory ContosoUniversity
 }
 
 task Migrate -description "Migrate the changes into the runtime database" {
@@ -48,6 +48,11 @@ task Clean -description "Clean out all the binary folders" {
     exec { dotnet clean --configuration $configuration /nologo } -workingDirectory .
     remove-directory-silently $publish
     remove-directory-silently $testResults
+}
+
+task LocalVersion -description "Create a local version number for the build (use along with Compile)" {
+    $script:version = (dotnet gitversion /output json /showvariable SemVer)
+    Write-Host "Version: ${version}"
 }
   
 task ? -alias help -description "Display help content and possible targets" {
