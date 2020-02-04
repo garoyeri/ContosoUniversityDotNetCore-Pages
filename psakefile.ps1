@@ -31,7 +31,7 @@ task Test -depends Compile -description "Run unit tests" {
 }
  
 task Compile -depends Info -description "Compile the solution" {
-    exec { set-project-properties $script:version } -workingDirectory .
+    exec { set-project-properties $version } -workingDirectory .
     exec { dotnet build --configuration $configuration /nologo } -workingDirectory .
 }
 
@@ -51,8 +51,8 @@ task Clean -description "Clean out all the binary folders" {
 }
 
 task LocalVersion -description "Create a local version number for the build (use along with Compile)" {
-    $script:version = (dotnet gitversion /output json /showvariable SemVer)
-    Write-Host "Version: ${version}"
+    $localVersion = (dotnet gitversion /output json /showvariable SemVer)
+    Write-Host "Version: ${localVersion}"
 }
   
 task ? -alias help -description "Display help content and possible targets" {

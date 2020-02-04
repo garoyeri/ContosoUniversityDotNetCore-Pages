@@ -20,12 +20,13 @@ To prepare the database, execute the build script using [PSake](https://psake.re
 
 Version numbers can be passed on the build script command line:
 
+From PowerShell:
 ```
-psake CI -properties ${'version':'1.2.3-dev.5'}
+invoke-psake CI -properties ${'version':'1.2.3-dev.5'}
 ```
 
-Or demonstrate the use of [GitVersion](https://gitversion.net/docs/) locally:
+Or generate a version using [GitVersion](https://gitversion.net/docs/) locally:
 ```
-psake 'localversion, CI'
+psake localversion
 ```
-will generate a semantic version and execute the continuous integration build.
+will generate a semantic version and output it.
