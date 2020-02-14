@@ -19,11 +19,13 @@ task Info -description "Display runtime information" {
     exec { dotnet --info }
 }
 
-task Test -depends Compile -description "Run unit tests" {
+task MigrateTest -description "Recreate the testing database" {
     # drop and recreate the test database
     exec { dotnet rh /d=ContosoUniversityDotNetCore-Pages-Test /f=ContosoUniversity/App_Data /s="(LocalDb)\mssqllocaldb" /silent /drop }
     exec { dotnet rh /d=ContosoUniversityDotNetCore-Pages-Test /f=ContosoUniversity/App_Data /s="(LocalDb)\mssqllocaldb" /silent /simple }
+}
 
+task Test -depends Compile, MigrateTest -description "Run unit tests" {
     # find any directory that ends in "Tests" and execute a test
     get-childitem . *Tests -directory | foreach-object {
         exec { dotnet test --configuration $configuration --no-build } -workingDirectory $_.fullname
@@ -50,7 +52,7 @@ task Clean -description "Clean out all the binary folders" {
     remove-directory-silently $testResults
 }
 
-task LocalVersion -description "Create a local version number for the build (use along with Compile)" {
+task LocalVersion -description "Create a local version number for the build" {
     $localVersion = (dotnet gitversion /output json /showvariable SemVer)
     Write-Host "Version: ${localVersion}"
 }
