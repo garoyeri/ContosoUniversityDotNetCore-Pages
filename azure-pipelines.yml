@@ -30,7 +30,15 @@ steps:
 
 - task: PowerShell@2
   displayName: Build and Test
+  continueOnError: true
   inputs:
     targetType: 'inline'
     script: 'invoke-psake ci -properties ${''version'':''$(Build.BuildNumber)''}'
   
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'XUnit'
+    testResultsFiles: '**.trx'
+    searchFolder: 'TestResults'
+    mergeTestResults: true
+    failTaskOnFailedTests: true
