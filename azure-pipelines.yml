@@ -38,6 +38,7 @@ steps:
   
 - task: PublishTestResults@2
   inputs:
+    displayName: Publish Test Results
     testResultsFormat: 'VSTest'
     testResultsFiles: '**.trx'
     searchFolder: 'TestResults'
