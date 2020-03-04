@@ -1,6 +1,7 @@
 trigger:
 - master
 
+# Since we use LocalDB for the test database, it must run in a Windows environment
 pool:
   vmImage: 'windows-2019'
 
