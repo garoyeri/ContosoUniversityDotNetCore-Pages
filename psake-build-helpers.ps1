@@ -9,7 +9,7 @@ function Get-Copyright {
 function Publish-Project {
     $project = Split-Path $pwd -Leaf
     Write-Host "Publishing $project"
-    dotnet publish --configuration $configuration --no-restore --output $publish/$project /nologo
+    dotnet publish --configuration $configuration --no-build --output $publish/$project /nologo
 }
 
 function Set-Regenerated-File($path, $newContent) {
