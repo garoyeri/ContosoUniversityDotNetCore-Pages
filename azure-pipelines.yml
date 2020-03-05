@@ -44,3 +44,11 @@ steps:
     searchFolder: 'TestResults'
     mergeTestResults: true
     failTaskOnFailedTests: true
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    displayName: Publish Artifacts
+    targetPath: 'publish'
+    artifact: 'website'
+    publishLocation: 'pipeline'
+    
