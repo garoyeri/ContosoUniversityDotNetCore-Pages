@@ -55,9 +55,9 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ${{ github.workspace }}/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        key: ${{ runner.os }}-nuget-local-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-
+          ${{ runner.os }}-nuget-local-
 
     - name: Setup Required Build Dependencies
       run: pwsh .\setup.ps1
