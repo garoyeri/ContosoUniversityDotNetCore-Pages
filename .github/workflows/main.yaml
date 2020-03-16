@@ -19,7 +19,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - Checkout Source Code
+    - name: Checkout Source Code
       uses: actions/checkout@v2
 
     # GitVersion on GitHub Actions
