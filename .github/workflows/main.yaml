@@ -55,3 +55,12 @@ jobs:
       run: |
         invoke-psake ci -properties ${'version':'${{ steps.gitversion.outputs.semVer }}'}
 
+    - uses: actions/upload-artifact@v1
+      with:
+        name: website
+        path: publish
+
+    - uses: actions/upload-artifact@v1
+      with:
+        name: test-results
+        path: TestResults
