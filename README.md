@@ -52,3 +52,13 @@ Or generate a version using [GitVersion](https://gitversion.net/docs/) locally:
 psake localversion
 ```
 will generate a semantic version and output it.
+
+## Upgrading Packages
+
+To speed up builds, NuGet package lock files are used (see: [Enable repeatable package restores using a lock file](https://devblogs.microsoft.com/nuget/enable-repeatable-package-restores-using-a-lock-file/)). This is setup by default whenever builds are done using the `Directory.Build.props` file to add the necessary switches to `msbuild`. However, this means that when you upgrade your packages and try to restore, it will fail with an error message about mismatching versions between the project files and the lock files. To regenerate the lock files, you'll need to do:
+
+```
+dotnet restore --force-evaluate
+```
+
+This will regenerate the lock files. Make sure you commit these files to source control so that it can be used on the server.
