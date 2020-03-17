@@ -45,16 +45,6 @@ jobs:
 #      with:
 #        dotnet-version: '3.1.200'
 
-    # Caching of NuGet Dependencies
-    # https://github.com/actions/cache/blob/master/examples.md#c---nuget
-    - name: Cache NuGet Dependencies
-      uses: actions/cache@v1
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-
     - name: Setup Required Build Dependencies
       run: pwsh .\setup.ps1
 
