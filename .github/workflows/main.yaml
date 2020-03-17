@@ -17,10 +17,6 @@ jobs:
     # The type of runner that the job will run on
     runs-on: windows-latest
 
-    env:
-      # Move NuGet packages to workspace folder to avoid caching ALL system packages
-      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Checkout Source Code
@@ -54,10 +50,10 @@ jobs:
     - name: Cache NuGet Dependencies
       uses: actions/cache@v1
       with:
-        path: ${{ github.workspace }}/.nuget/packages
-        key: ${{ runner.os }}-nuget-local-${{ hashFiles('**/packages.lock.json') }}
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-local-
+          ${{ runner.os }}-nuget-
 
     - name: Setup Required Build Dependencies
       run: pwsh .\setup.ps1
