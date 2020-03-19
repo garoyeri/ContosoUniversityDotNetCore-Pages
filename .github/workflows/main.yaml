@@ -51,7 +51,7 @@ jobs:
     - name: Build and Test
       shell: pwsh
       run: |
-        invoke-psake ci -properties ${'version':'${{ steps.gitversion.outputs.semVer }}'}
+        invoke-psake ci -properties @{'version'='${{ steps.gitversion.outputs.semVer }}'}
 
     - name: Upload Website Artifact
       uses: actions/upload-artifact@v1
